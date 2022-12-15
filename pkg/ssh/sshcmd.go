@@ -54,7 +54,11 @@ func (s *SSH) CmdAsync(host string, cmds ...string) error {
 		if cmd == "" {
 			continue
 		}
-
+		index := strings.Contains(cmd, "registryDomain")
+		if !index {
+			cmd = "sudo " + cmd
+		}
+		logger.Info("CmdAsync exec cmd:" + cmd)
 		if err := func(cmd string) error {
 			if isLocal {
 				return exec.Cmd("bash", "-c", cmd)
@@ -106,6 +110,12 @@ func (s *SSH) CmdAsync(host string, cmds ...string) error {
 }
 
 func (s *SSH) Cmd(host, cmd string) ([]byte, error) {
+	index := strings.Contains(cmd, "registryDomain")
+	if !index {
+		cmd = "sudo " + cmd
+	}
+	logger.Info("exec cmd:" + cmd)
+
 	if iputils.IsLocalIP(host, s.LocalAddress) {
 		logger.Debug("ip is local ip %s default,local ssh cmd exec", host)
 		d, err := exec.RunBashCmd(cmd)

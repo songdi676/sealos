@@ -19,10 +19,10 @@ package constants
 import "fmt"
 
 const (
-	DefaultBashFmt      = "cd %s && bash %s"
+	DefaultBashFmt      = "cd %s && sudo bash %s"
 	DefaultCPFmt        = "mkdir -p %s && cp -rf  %s/* %s/"
-	DefaultLnFmt        = "ln -s %s %s"
-	CdAndExecCmd        = "cd %s && %s"
+	DefaultLnFmt        = "ln -snf %s %s"
+	CdAndExecCmd        = "cd %s && sudo %s"
 	renderInit          = "init"
 	renderClean         = "clean"
 	renderInitRegistry  = "init-registry"
