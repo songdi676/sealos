@@ -163,7 +163,7 @@ jobs:
           - 5000:5000
     strategy:
       matrix:
-        arch: [ arm64, amd64 ]
+        arch: [  amd64 ]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
