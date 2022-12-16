@@ -102,6 +102,7 @@ func (p *processor) getHostEnv(hostIP string) map[string]string {
 		}
 	}
 	hostEnvMap := maps.ListToMap(hostEnv)
+	hostEnvMap["KubeNodeIP"] = strings.Replace(hostIP, ":22", "", -1)
 	specEnvMap := maps.ListToMap(p.Spec.Env)
 	var imageEnvMap map[string]string
 	for _, img := range p.mounts {
