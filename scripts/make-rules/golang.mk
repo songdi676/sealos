@@ -60,7 +60,7 @@ go.build.%:
 	@mkdir -p $(BIN_DIR)/$(PLATFORM)
 
 	@if [ "$(COMMAND)" == "sealos" ]; then \
-		CGO_ENABLED=0; \
+		CGO_ENABLED=1; \
 		CC=x86_64-linux-gnu-gcc; \
 		if [ "$(ARCH)" == "arm64" ]; then \
 			CC=aarch64-linux-gnu-gcc; \
