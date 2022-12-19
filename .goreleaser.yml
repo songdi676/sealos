@@ -54,70 +54,14 @@ builds:
           - CGO_ENABLED=1
           - CC=x86_64-linux-gnu-gcc
 
-  - id: sealctl
-    env:
-      - CGO_ENABLED=0
-    main: ./cmd/sealctl
-    hooks:
-      post: upx "{{ .Path }}"
-    binary: sealctl
-    goos:
-      - linux
-    goarch:
-      - arm64
-      - amd64
-    flags:
-      - -trimpath
-    ldflags:
-      - -X github.com/labring/sealos/pkg/version.gitVersion={{.Version}}
-      - -X github.com/labring/sealos/pkg/version.gitCommit={{.ShortCommit}}
-      - -X github.com/labring/sealos/pkg/version.buildDate={{.Date}}
-      - -s -w
 
-  - id: lvscare
-    env:
-      - CGO_ENABLED=0
-    main: ./cmd/lvscare
-    hooks:
-      post: upx "{{ .Path }}"
-    binary: lvscare
-    goos:
-      - linux
-    goarch:
-      - arm64
-      - amd64
-    flags:
-      - -trimpath
-    ldflags:
-      - -X github.com/labring/sealos/pkg/version.gitVersion={{.Version}}
-      - -X github.com/labring/sealos/pkg/version.gitCommit={{.ShortCommit}}
-      - -X github.com/labring/sealos/pkg/version.buildDate={{.Date}}
-      - -s -w
-
-  - id: image-cri-shim
-    env:
-      - CGO_ENABLED=0
-    main: ./cmd/image-cri-shim
-    hooks:
-      post: upx "{{ .Path }}"
-    binary: image-cri-shim
-    goos:
-      - linux
-    goarch:
-      - arm64
-      - amd64
-    flags:
-      - -trimpath
-    ldflags:
-      - -X github.com/labring/sealos/pkg/version.gitVersion={{.Version}}
-      - -X github.com/labring/sealos/pkg/version.gitCommit={{.ShortCommit}}
-      - -X github.com/labring/sealos/pkg/version.buildDate={{.Date}}
-      - -s -w
 
 release:
-#  github:
-#    name: sealos
+  #  github:
+  #    name: sealos
   prerelease: auto
+
+
 
 nfpms:
   - id: packages
@@ -132,34 +76,14 @@ nfpms:
       - deb
       - rpm
 
-publishers:
-  - name: "fury.io"
-    ids:
-      - packages
-    dir: "{{ dir .ArtifactPath }}"
-    cmd: |
-      curl -F package=@{{ .ArtifactName }} https://{{ .Env.FURY_TOKEN }}@push.fury.io/{{ .Env.USERNAME }}/
+archives:
+  - id: archive
 
 checksum:
-  disable: true
   name_template: "{{ .ProjectName }}_checksums.txt"
+  algorithm: sha256
+  ids:
+    - archive
 
 snapshot:
   name_template: "{{ .Tag }}-next"
-
-changelog:
-  use: github
-  sort: asc
-  groups:
-    - title: Features
-      regexp: "^.*feat[(\\w)]*:+.*$"
-      order: 0
-    - title: "Bug fixes"
-      regexp: "^.*fix[(\\w)]*:+.*$"
-      order: 1
-    - title: Others
-      order: 999
-  filters:
-    exclude:
-      - "^docs:"
-      - "^test:"
