@@ -62,7 +62,7 @@ func Test_processor_WrapperShell(t *testing.T) {
 				"IP=(127.0.0.2)",
 				"key=(bar)",
 				"foo=(bar xxx ddd fffff)",
-				"&& echo $foo ${IP[@]}",
+				"&& sudo echo $foo ${IP[@]}",
 			},
 		},
 	}
