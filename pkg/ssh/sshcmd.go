@@ -54,7 +54,7 @@ func (s *SSH) CmdAsync(host string, cmds ...string) error {
 		if cmd == "" {
 			continue
 		}
-		index := strings.Contains(cmd, "registryDomain")
+		index := strings.Contains(cmd, "=(")
 		if !index {
 			cmd = "sudo " + cmd
 		}
@@ -110,7 +110,7 @@ func (s *SSH) CmdAsync(host string, cmds ...string) error {
 }
 
 func (s *SSH) Cmd(host, cmd string) ([]byte, error) {
-	index := strings.Contains(cmd, "registryDomain")
+	index := strings.Contains(cmd, "=(")
 	if !index {
 		cmd = "sudo " + cmd
 	}
