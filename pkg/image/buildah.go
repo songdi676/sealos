@@ -93,10 +93,9 @@ func buildahRegistrySync() error {
 [[registry]]
 prefix = "docker.io/labring"
 location = "docker.io/labring"
-[[registry]]
-prefix = "harbor.paas.nl"
-location = "harbor.paas.nl"
-insecure = true
 `
-	return fileutil.WriteFile(registryPath, []byte(data))
+	if !fileutil.IsExist(registryPath) {
+		return fileutil.WriteFile(registryPath, []byte(data))
+	}
+	return nil
 }
