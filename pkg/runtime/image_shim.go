@@ -49,6 +49,10 @@ func (is *ImageShim) GetInfo(rootfs string) string {
 	}
 	image, _, _ := unstructured.NestedString(shimConfig, "image")
 	logger.Debug("show image shim info, image dir : %s ", image)
+	if image == "" {
+		logger.Debug("image is null,use default image shim config")
+		return defaultRootDirectory
+	}
 	return image
 }
 
